@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rava - البوت العربي الأول في ديسكورد</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -15,16 +15,119 @@
 
 ```
     body {
-        font-family: 'Cairo', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        background-color: #36393f;
+        font-family: 'Cairo', 'Amiri', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 30%, #0f3460 70%, #533a7d 100%);
         color: #dcddde;
         min-height: 100vh;
         display: flex;
         flex-direction: column;
+        position: relative;
+        overflow-x: hidden;
     }
 
+    /* خلفية متحركة */
+    body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: 
+            radial-gradient(circle at 20% 20%, rgba(88, 101, 242, 0.1) 0%, transparent 50%),
+            radial-gradient(circle at 80% 80%, rgba(114, 137, 218, 0.1) 0%, transparent 50%),
+            radial-gradient(circle at 40% 70%, rgba(83, 58, 125, 0.1) 0%, transparent 50%);
+        animation: backgroundMove 20s ease-in-out infinite;
+        z-index: -1;
+    }
+
+    @keyframes backgroundMove {
+        0%, 100% { transform: translateX(0) translateY(0); }
+        25% { transform: translateX(-10px) translateY(-10px); }
+        50% { transform: translateX(10px) translateY(10px); }
+        75% { transform: translateX(-5px) translateY(5px); }
+    }
+
+    /* أنيميشن الظهور */
+    .fade-in {
+        opacity: 0;
+        transform: translateY(30px);
+        animation: fadeInUp 0.8s ease-out forwards;
+    }
+
+    .fade-in-left {
+        opacity: 0;
+        transform: translateX(-50px);
+        animation: fadeInLeft 0.8s ease-out forwards;
+    }
+
+    .fade-in-right {
+        opacity: 0;
+        transform: translateX(50px);
+        animation: fadeInRight 0.8s ease-out forwards;
+    }
+
+    .scale-in {
+        opacity: 0;
+        transform: scale(0.8);
+        animation: scaleIn 0.8s ease-out forwards;
+    }
+
+    @keyframes fadeInUp {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes fadeInLeft {
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes fadeInRight {
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes scaleIn {
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    /* أنيميشن الضغط */
+    .clickable {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        cursor: pointer;
+    }
+
+    .clickable:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    .clickable:active {
+        transform: translateY(0) scale(0.98);
+    }
+
+    /* تأخير الأنيميشن */
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
+    .delay-3 { animation-delay: 0.3s; }
+    .delay-4 { animation-delay: 0.4s; }
+    .delay-5 { animation-delay: 0.5s; }
+    .delay-6 { animation-delay: 0.6s; }
+    .delay-7 { animation-delay: 0.7s; }
+    .delay-8 { animation-delay: 0.8s; }
+
     .status-bar {
-        background-color: #000;
+        background: linear-gradient(135deg, #000 0%, #1a1a2e 100%);
         color: #fff;
         padding: 8px 20px;
         display: flex;
@@ -32,10 +135,12 @@
         align-items: center;
         font-size: 16px;
         font-weight: 600;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
     }
 
     .time {
         font-size: 16px;
+        font-weight: 700;
     }
 
     .status-icons {
@@ -53,20 +158,22 @@
     }
 
     .battery {
-        background-color: #fff;
-        border-radius: 2px;
+        background: linear-gradient(135deg, #fff 0%, #f0f0f0 100%);
+        border-radius: 4px;
         padding: 2px 6px;
         color: #000;
         font-size: 14px;
         font-weight: 700;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     }
 
     .browser-header {
-        background-color: #2f3136;
+        background: linear-gradient(135deg, #2f3136 0%, #36393f 100%);
         padding: 12px 20px;
         display: flex;
         align-items: center;
         justify-content: space-between;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
     }
 
     .browser-left {
@@ -82,6 +189,14 @@
         font-size: 22px;
         cursor: pointer;
         font-weight: 300;
+        transition: all 0.3s ease;
+        padding: 5px;
+        border-radius: 50%;
+    }
+
+    .close-btn:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+        transform: rotate(90deg);
     }
 
     .url-section {
@@ -100,7 +215,7 @@
     .url-text {
         color: #dcddde;
         font-size: 16px;
-        font-weight: 500;
+        font-weight: 600;
     }
 
     .browser-right {
@@ -115,8 +230,16 @@
         color: #b9bbbe;
         font-size: 18px;
         cursor: pointer;
-        padding: 5px;
+        padding: 8px;
         opacity: 0.8;
+        transition: all 0.3s ease;
+        border-radius: 4px;
+    }
+
+    .browser-icon:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+        opacity: 1;
+        transform: scale(1.1);
     }
 
     .main-content {
@@ -127,7 +250,6 @@
         justify-content: center;
         padding: 40px 20px;
         text-align: center;
-        background-color: #36393f;
         position: relative;
     }
 
@@ -142,10 +264,12 @@
         width: 80px;
         height: 80px;
         border-radius: 50%;
-        background-color: #4f545c;
-        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none"><rect width="80" height="80" rx="40" fill="%234f545c"/><path d="M40 20c-5.5 0-10 4.5-10 10s4.5 10 10 10 10-4.5 10-10-4.5-10-10-10zm0 36c-8.33 0-15-3.33-15-7.5v-2.5c0-2.76 6.72-5 15-5s15 2.24 15 5v2.5c0 4.17-6.67 7.5-15 7.5z" fill="%23b9bbbe"/></svg>');
+        background: linear-gradient(135deg, #4f545c 0%, #5c6169 100%);
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none"><rect width="80" height="80" rx="40" fill="url(%23grad1)"/><defs><linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%234f545c;stop-opacity:1" /><stop offset="100%" style="stop-color:%235c6169;stop-opacity:1" /></linearGradient></defs><path d="M40 20c-5.5 0-10 4.5-10 10s4.5 10 10 10 10-4.5 10-10-4.5-10-10-10zm0 36c-8.33 0-15-3.33-15-7.5v-2.5c0-2.76 6.72-5 15-5s15 2.24 15 5v2.5c0 4.17-6.67 7.5-15 7.5z" fill="%23b9bbbe"/></svg>');
         background-size: cover;
         background-position: center;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        border: 3px solid rgba(255, 255, 255, 0.1);
     }
 
     .bot-section {
@@ -158,7 +282,7 @@
         width: 60px;
         height: 60px;
         border-radius: 50%;
-        background: linear-gradient(135deg, #5865f2, #4752c4);
+        background: linear-gradient(135deg, #5865f2 0%, #4752c4 100%);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -166,26 +290,31 @@
         font-size: 20px;
         font-weight: 700;
         border: none;
-        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60" fill="none"><circle cx="30" cy="30" r="30" fill="%235865f2"/><circle cx="22" cy="24" r="4" fill="white"/><circle cx="38" cy="24" r="4" fill="white"/><path d="M20 40c0-3 4-6 10-6s10 3 10 6" stroke="white" stroke-width="3" stroke-linecap="round"/></svg>');
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60" fill="none"><circle cx="30" cy="30" r="30" fill="url(%23grad2)"/><defs><linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%235865f2;stop-opacity:1" /><stop offset="100%" style="stop-color:%234752c4;stop-opacity:1" /></linearGradient></defs><circle cx="22" cy="24" r="4" fill="white"/><circle cx="38" cy="24" r="4" fill="white"/><path d="M20 40c0-3 4-6 10-6s10 3 10 6" stroke="white" stroke-width="3" stroke-linecap="round"/></svg>');
         background-size: cover;
+        box-shadow: 0 4px 15px rgba(88, 101, 242, 0.4);
+        border: 3px solid rgba(255, 255, 255, 0.2);
     }
 
     .bot-name {
         font-size: 32px;
-        font-weight: 700;
+        font-weight: 800;
         color: #dcddde;
         margin: 0;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
     }
 
     .premium-tag {
-        background-color: #4f545c;
-        color: #b9bbbe;
-        padding: 6px 12px;
-        border-radius: 12px;
-        font-size: 12px;
-        font-weight: 500;
+        background: linear-gradient(135deg, #ff6b6b 0%, #ff8e8e 100%);
+        color: white;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 13px;
+        font-weight: 600;
         margin-bottom: 30px;
         display: inline-block;
+        box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+        border: 2px solid rgba(255, 255, 255, 0.2);
     }
 
     .main-title {
@@ -194,66 +323,110 @@
         color: #dcddde;
         margin-bottom: 25px;
         line-height: 1.2;
+        text-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
+        background: linear-gradient(135deg, #dcddde 0%, #f0f0f0 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
     }
 
     .description {
         font-size: 16px;
         color: #b9bbbe;
-        line-height: 1.6;
+        line-height: 1.8;
         max-width: 600px;
         margin-bottom: 40px;
+        text-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
     }
 
     .button-container {
         display: flex;
         flex-direction: column;
-        gap: 12px;
+        gap: 15px;
         width: 100%;
         max-width: 400px;
     }
 
     .discord-btn {
-        background: linear-gradient(135deg, #5865f2, #4752c4);
+        background: linear-gradient(135deg, #5865f2 0%, #4752c4 100%);
         color: white;
-        padding: 16px 24px;
+        padding: 18px 28px;
         border: none;
-        border-radius: 8px;
+        border-radius: 12px;
         font-size: 16px;
-        font-weight: 600;
+        font-weight: 700;
         cursor: pointer;
-        transition: all 0.2s ease;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         text-decoration: none;
         display: flex;
         align-items: center;
         justify-content: center;
-        box-shadow: 0 2px 10px rgba(88, 101, 242, 0.25);
+        box-shadow: 0 6px 20px rgba(88, 101, 242, 0.4);
+        border: 2px solid rgba(255, 255, 255, 0.1);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .discord-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: left 0.6s ease;
+    }
+
+    .discord-btn:hover::before {
+        left: 100%;
     }
 
     .discord-btn:hover {
-        background: linear-gradient(135deg, #4752c4, #3c45a3);
-        transform: translateY(-1px);
-        box-shadow: 0 4px 15px rgba(88, 101, 242, 0.35);
+        background: linear-gradient(135deg, #4752c4 0%, #3c45a3 100%);
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(88, 101, 242, 0.5);
     }
 
     .control-btn {
-        background-color: #4f545c;
-        color: #b9bbbe;
-        padding: 16px 24px;
+        background: linear-gradient(135deg, #4f545c 0%, #5c6169 100%);
+        color: #dcddde;
+        padding: 18px 28px;
         border: none;
-        border-radius: 8px;
+        border-radius: 12px;
         font-size: 16px;
-        font-weight: 600;
+        font-weight: 700;
         cursor: pointer;
-        transition: all 0.2s ease;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         text-decoration: none;
         display: flex;
         align-items: center;
         justify-content: center;
+        box-shadow: 0 6px 20px rgba(79, 84, 92, 0.3);
+        border: 2px solid rgba(255, 255, 255, 0.1);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .control-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+        transition: left 0.6s ease;
+    }
+
+    .control-btn:hover::before {
+        left: 100%;
     }
 
     .control-btn:hover {
-        background-color: #5c6169;
-        transform: translateY(-1px);
+        background: linear-gradient(135deg, #5c6169 0%, #6b7280 100%);
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(79, 84, 92, 0.4);
     }
 
     .stats-text {
@@ -264,6 +437,7 @@
         font-size: 14px;
         color: #72767d;
         text-align: center;
+        font-weight: 500;
     }
 
     .mobile-nav {
@@ -271,12 +445,13 @@
         bottom: 0;
         left: 0;
         right: 0;
-        background-color: #2f3136;
-        padding: 8px 20px;
+        background: linear-gradient(135deg, #2f3136 0%, #36393f 100%);
+        padding: 12px 20px;
         display: flex;
         align-items: center;
         justify-content: space-between;
         border-top: 1px solid #40444b;
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
     }
 
     .nav-arrow {
@@ -285,8 +460,16 @@
         color: #72767d;
         font-size: 24px;
         cursor: pointer;
-        padding: 10px;
+        padding: 12px;
         font-weight: 300;
+        transition: all 0.3s ease;
+        border-radius: 50%;
+    }
+
+    .nav-arrow:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+        color: #dcddde;
+        transform: scale(1.1);
     }
 
     .nav-home {
@@ -295,7 +478,15 @@
         color: #72767d;
         font-size: 20px;
         cursor: pointer;
-        padding: 10px;
+        padding: 12px;
+        transition: all 0.3s ease;
+        border-radius: 50%;
+    }
+
+    .nav-home:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+        color: #dcddde;
+        transform: scale(1.1);
     }
 
     .nav-home::before {
@@ -308,12 +499,14 @@
     }
 
     .tab-counter {
-        background-color: #4f545c;
+        background: linear-gradient(135deg, #4f545c 0%, #5c6169 100%);
         color: #dcddde;
-        padding: 4px 10px;
-        border-radius: 12px;
+        padding: 8px 14px;
+        border-radius: 20px;
         font-size: 14px;
-        font-weight: 600;
+        font-weight: 700;
+        box-shadow: 0 4px 15px rgba(79, 84, 92, 0.3);
+        border: 2px solid rgba(255, 255, 255, 0.1);
     }
 
     @media (max-width: 768px) {
@@ -342,7 +535,7 @@
 
         .main-content {
             padding: 20px;
-            padding-bottom: 100px;
+            padding-bottom: 120px;
         }
     }
 </style>
@@ -350,61 +543,94 @@
 
 </head>
 <body>
-    <div class="status-bar">
+    <div class="status-bar fade-in-left delay-1">
         <div class="time">10:39</div>
         <div class="status-icons">
             <div class="wifi-icon"></div>
-            <div class="battery">28</div>
+            <div class="battery clickable">28</div>
         </div>
     </div>
 
 ```
-<div class="browser-header">
+<div class="browser-header fade-in-right delay-2">
     <div class="browser-left">
-        <button class="close-btn">×</button>
+        <button class="close-btn clickable">×</button>
         <div class="url-section">
             <div class="lock-icon"></div>
             <span class="url-text">rava.io</span>
         </div>
     </div>
     <div class="browser-right">
-        <button class="browser-icon">□</button>
-        <button class="browser-icon">↗</button>
-        <button class="browser-icon">⋯</button>
+        <button class="browser-icon clickable">□</button>
+        <button class="browser-icon clickable">↗</button>
+        <button class="browser-icon clickable">⋯</button>
     </div>
 </div>
 
 <div class="main-content">
-    <div class="profile-section">
-        <div class="user-avatar"></div>
+    <div class="profile-section scale-in delay-3">
+        <div class="user-avatar clickable"></div>
         <div class="bot-section">
-            <div class="bot-avatar"></div>
+            <div class="bot-avatar clickable"></div>
             <h2 class="bot-name">Rava</h2>
         </div>
     </div>
 
-    <div class="premium-tag">جديد : اشتراكات عضوية التميز</div>
+    <div class="premium-tag clickable fade-in delay-4">جديد : اشتراكات عضوية التميز</div>
 
-    <h1 class="main-title">البوت العربي الأول في ديسكورد</h1>
+    <h1 class="main-title fade-in delay-5">البوت العربي الأول في ديسكورد</h1>
 
-    <p class="description">
+    <p class="description fade-in delay-6">
         بوت متعدد الأغراض قابل للتخصيص جداً حيث يوفر لك تخصيص صورة كرسالة ترحيبية وسجلات متقدمة وأوامر اجتماعية واشراف وأكثر ...
     </p>
 
     <div class="button-container">
-        <a href="https://discord.com/oauth2/authorize?client_id=1390306698224205927&permissions=8&integration_type=0&scope=bot" class="discord-btn">
+        <a href="https://discord.com/oauth2/authorize?client_id=1390306698224205927&permissions=8&integration_type=0&scope=bot" class="discord-btn clickable fade-in delay-7">
             إضافة البوت في Discord
         </a>
-        <button class="control-btn">لوحة التحكم</button>
+        <button class="control-btn clickable fade-in delay-8">لوحة التحكم</button>
     </div>
 </div>
 
-<div class="mobile-nav">
-    <button class="nav-arrow">←</button>
-    <button class="nav-arrow">→</button>
-    <button class="nav-home"></button>
-    <div class="tab-counter">36</div>
+<div class="mobile-nav fade-in delay-8">
+    <button class="nav-arrow clickable">←</button>
+    <button class="nav-arrow clickable">→</button>
+    <button class="nav-home clickable"></button>
+    <div class="tab-counter clickable">36</div>
 </div>
+
+<script>
+    // إضافة أنيميشن إضافي للتفاعل
+    document.querySelectorAll('.clickable').forEach(element => {
+        element.addEventListener('click', function() {
+            this.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                this.style.transform = '';
+            }, 150);
+        });
+    });
+
+    // أنيميشن للخلفية عند التمرير
+    let ticking = false;
+    
+    function updateBackground() {
+        const scrolled = window.pageYOffset;
+        const rate = scrolled * -0.5;
+        
+        document.body.style.transform = `translateY(${rate}px)`;
+        
+        ticking = false;
+    }
+    
+    function requestTick() {
+        if (!ticking) {
+            requestAnimationFrame(updateBackground);
+            ticking = true;
+        }
+    }
+    
+    window.addEventListener('scroll', requestTick);
+</script>
 ```
 
 </body>
