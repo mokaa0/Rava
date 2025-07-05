@@ -344,6 +344,11 @@
         box-shadow: 0 8px 25px rgba(88, 101, 242, 0.5);
     }
 
+    .discord-btn:active {
+        transform: translateY(0px) scale(0.95);
+        box-shadow: 0 4px 15px rgba(88, 101, 242, 0.3);
+    }
+
     .control-btn {
         background: linear-gradient(135deg, #4f545c 0%, #5c6169 100%);
         color: #dcddde;
@@ -366,6 +371,31 @@
     .control-btn:hover {
         transform: translateY(-2px);
         box-shadow: 0 8px 25px rgba(79, 84, 92, 0.4);
+    }
+
+    .control-btn:active {
+        transform: translateY(0px) scale(0.95);
+        box-shadow: 0 4px 15px rgba(79, 84, 92, 0.2);
+    }
+
+    /* أنيميشن ضغط الأزرار */
+    .btn-clicked {
+        animation: btnClick 0.3s ease;
+    }
+
+    @keyframes btnClick {
+        0% { transform: scale(1); }
+        50% { transform: scale(0.95); }
+        100% { transform: scale(1); }
+    }
+
+    /* أنيميشن الأزرار الأخرى */
+    .nav-arrow:active, .nav-home:active, .close-btn:active, .browser-icon:active {
+        transform: scale(0.9);
+    }
+
+    .tab-counter:active {
+        transform: scale(0.95);
     }
 
     .stats-text {
@@ -539,7 +569,7 @@
     </p>
 
     <div class="button-container">
-        <a href="#" class="discord-btn fade-in delay-6">إضافة البوت في Discord</a>
+        <a href="https://discord.com/oauth2/authorize?client_id=1390306698224205927&permissions=8&integration_type=0&scope=bot" class="discord-btn fade-in delay-6" target="_blank">إضافة البوت في Discord</a>
         <a href="#" class="control-btn fade-in delay-7">لوحة التحكم</a>
     </div>
 
@@ -558,4 +588,21 @@
 ```
 
 </body>
+
+<script>
+    // إضافة أنيميشن للأزرار عند الضغط
+    document.addEventListener('DOMContentLoaded', function() {
+        const buttons = document.querySelectorAll('.discord-btn, .control-btn, .nav-arrow, .nav-home, .close-btn, .browser-icon, .tab-counter');
+        
+        buttons.forEach(button => {
+            button.addEventListener('click', function() {
+                this.classList.add('btn-clicked');
+                setTimeout(() => {
+                    this.classList.remove('btn-clicked');
+                }, 300);
+            });
+        });
+    });
+</script>
+
 </html>
